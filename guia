@@ -1,0 +1,72 @@
+1. Crear un servidor en MONGODB.COM
+2. Asignar usuario y contraseña y permisos
+3. Asignar IP, en este ejemplo es cualquier direcciòn IP
+4. Creo mi carpeta del proyecto
+5. Inicio mi proyecto JSON con el comando: npm init --yes
+6. Vamos a levantar el servidor:
+7. Vamos a utilizar una librerìa que se llama express para levantar
+   el servidor, para ello lo instalamos con el comando npm i express
+8. Creamos una carpeta "src" y el archivo còdigo del servidor: "index.js"
+9. En el archivo del servidor, se usa la librería express, se importa (requiere) en una variable, se retorna
+   en una variable llamada app, y se hace una escucha directa del puerto donde se aloja, en este caso el 9000
+10. Ahora vamos a instalar una extensión que me permite reiniciar el servidor cada vez que hago una 
+    modificación, esto para no tener que hacerlo cada vez de manera manual, se llama NODEMON y se instala de 
+    la siguiente manera: 
+      npm i nodemon -D (La letra D indica dependencia de desarrollo, es decir no es requisito de la aplicación para funcionar)
+11. Ahora en el script del código json, le vamos a indicar que el parámetro start 
+    ejecuta: "nodemon src/index.js"
+12. Se hace una prueba para saber que el servidor ya está montado, la prueba se hace desde un navegador
+    haciendo un req al localhost:9000 o el puerto que nosotros designemos, con el siguiente código escrito en el cuerpo del index.js:
+    //routes
+         app.get("/",(req,res)=>{
+            res.send("Welcome to my API");
+         });
+13. El siguiente paso es muy importante, conectar nuestra aplicación del servidor con la base de datos
+    anteriormente creada en MONGODB ATLAS, para eso necesitamos instalar otra extensión desde terminal:
+         a. detengo el proceso actual, paro el servidor ctrl+c
+         b. instalo el paquete de librerias mongoose: npm intall mongoose
+         c. confirmo que se agregue a json, y lo requiero desde el archivo del servidor: 
+            const mongoose = requiere("mongoose");
+         d. luego con el objeto mongoose y el método connect, voy a incluir la uri de mi database
+            con el nombre de usuario y contraseña anteriormente asignados, pero por seguridad, esto no se hace
+            directamente desde el index.js, porque le daría acceso a cualquiera a mi base de datos.
+         e. Para proteger mi base de datos, debo crear una variable de ambiente y protegerla.
+         f. Para lo anterior, debo instalar un módulo npm i dotenv que me permite crear variables de ambiente
+            personalizadas.
+         g. Luego de instalado, requiero el módulo dotenv y usando el método config, ya lo estoy llamando
+         h. Creo un archivo .env en la raíz del proyecto y creo mi variable de ambiente con el nombre que yo
+            quiera y la URI que traigo de mongodb
+         i. Para llamarlo desde mi index.js uso el método process.env."Nombre de la variable", y puedo usar
+            una promesa para imprimir por terminal que ya está conectado, y puedo usar un catch para imprimir si hay algún error:
+                   .then() => console.log("Connected to MongoDB Atlas")
+                   .catch((error) => console.error(error));
+         j. Finalmente tenemos nuestro servidor conectado a la aplicación index.js
+14. Ejecutamos nuevamente npm run start y listo.
+15. Luego de tener conectada nuestra base de datos al servidor creado en js, vamos a hacer los endpoints,
+    lo que entiendo es que són los módulos finales con los cuales puedo interactuar con mi base de datos.
+16. Lo que entiendo ahora, es que hay que crear las rutas por medio de las cuales vamos a interactuar, para 
+    ello vamos a crear una carpeta en src llamada routes, la primera y unica ruta para este ejemplo será:
+      "user.js", es un archivo de javascript para definir la ruta. En el archivo de rutas, lo siguiente:
+         a. Requerimos el módulo express para usar objetos especiales, cómo por ejemplo:
+            const express = requiere("express");
+            const router = express.Router();
+         b. De este modulo js voy a exportar la constante router (module.exports = router) que ya fue
+            declarada y vamos a llenar 
+            con una ruta en el siguiente paso:
+         c. Creamos la primera ruta de creación de usuario:
+            usamos el objeto router y su metodo post (entiendo que hay varios métodos):
+               router.post('/users') ///la ruta users la defino yo///
+            a esto le vamos a pasar una función, (req,res) => (res.send("create user"))
+         d. Lo anterior es sólo un ejemplo para comprobar que la ruta funcione.
+         e. Para que la ruta funcione, la debo llamar desde la aplicación del servidor (Tener en cuenta que 
+            esto es opcional, osea, sólo para organización de los archivos y carpetas)
+         f. creo el middleware en index.js, al objeto app y el método use voy a llamar la ruta que me exporta
+            el módulo user.js, por lo cual lo debo requerir de la siguiente manera: 
+               const userRouts= require("./routes/user");
+         g. Así quedaría el llamado desde la app del servidor: app.use('/api', userRoutes)
+17. Pruebas de que los llamados de las rutas están funcionando:
+         a. Vamos a instalar un complemento rest client para hacer los req al servidor.
+         b. Creamos un archivo llamado request.http para crear un nuevo endpoint con ### cada endpoint
+            (request), cada ### es un endpoint diferente, un pedido al servidor diferente.
+         c. El primero de prueba es un POST, se escribe POST y ya tiene todo listo!!!
+         d. 

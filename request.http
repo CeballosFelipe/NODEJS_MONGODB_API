@@ -1,0 +1,28 @@
+###
+POST http://localhost:9000/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Pepito Perez",
+    "age": "43",
+    "email": "pperez@email.com"
+}
+
+###
+GET http://localhost:9000/api/users HTTP/1.1
+
+###
+GET http://localhost:9000/api/users/635578e3e10026625fb7f0c0 HTTP/1.1
+
+###
+PUT http://localhost:9000/api/users/635579b6e10026625fb7f0c2 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Luis Arango Arango",
+    "age": "72",
+    "email": "luisarango@email.com"
+}
+
+###
+DELETE http://localhost:9000/api/users/63557a00e10026625fb7f0c4 HTTP/1.1
