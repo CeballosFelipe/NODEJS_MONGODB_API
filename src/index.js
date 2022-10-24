@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require('path');
 require("dotenv").config();
 const userRoutes= require("./routes/user");
 
@@ -11,8 +12,8 @@ app.use(express.json());
 app.use('/api', userRoutes)
 
 //routes
-app.get("/",(req,res)=>{
-    res.send("Welcome to my API");
+app.get('/',(req,res)=>{
+   res.sendFile(path.join(__dirname+'/views/index.html'));
 });
 
 //mongoose connect
